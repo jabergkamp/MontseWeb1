@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post | Blog Montse</title>
+
+  <!-- Estilos base (mismos colores/estética del sitio) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fffdfb; --muted:#f5f3f0; --ink:#2b2b2b; --sub:#5f6469; --brand:#3b7a74; --card:#fff;
+      --shadow:0 10px 25px rgba(0,0,0,.06); --radius:18px; --max:1100px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.7;}
+    a{color:var(--brand);text-decoration:none}
+
+    /* Nav igual que el sitio */
+    .nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.9);backdrop-filter:saturate(140%) blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.05);}
+    .nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+    .brand{font-weight:600}
+    .menu{display:flex;gap:18px;}
+    .menu a{color:var(--ink);font-weight:500}
+    .cta{background:var(--brand);color:#fff;padding:10px 14px;border-radius:999px;font-weight:600;box-shadow:var(--shadow);}
+
+    main.container{max-width:var(--max);margin:0 auto;padding:40px 20px}
+    footer{text-align:center;padding:30px;color:var(--sub)}
+
+    /* Estilos del contenido del post */
+    .post-content h1,.post-content h2,.post-content h3{font-family:Lora,serif;color:var(--ink)}
+    .post-content p{margin:16px 0}
+    .post-content img{max-width:100%;border-radius:12px;margin:20px 0;box-shadow:var(--shadow)}
+    .post-content blockquote{border-left:4px solid var(--brand);padding-left:14px;font-style:italic;color:var(--sub);margin:20px 0}
+    .post-meta{color:var(--sub);margin-bottom:16px}
+
+    @media(max-width:768px){
+      main.container{padding:30px 16px}
+      .menu{display:none;}
+    }
+  </style>
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">Montse de la Riva</div>
+      <div class="menu">
+        <a href="/#inicio">Inicio</a>
+        <a href="/#acerca">Acerca de mí</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/">Blog y Recursos</a>
+        <a class="cta" href="/#contacto">Agendar sesión</a>
+      </div>
+      <a class="cta" href="/#contacto">Agendar sesión</a>
+    </div>
+  </nav>
+
+  <!-- Contenido del post -->
+  <main class="container">
+    <div id="meta" class="post-meta"></div>
+    <div id="content" class="post-content">Cargando post…</div>
+    <p style="margin-top:24px"><a href="/blog/">← Regresar al blog</a></p>
+  </main>
+
+  <footer>© 2025 Montse de la Riva · Psicoterapeuta sistémica</footer>
+
+  <script>
+    // Lee ?file=post1.md (o el que pongas) desde la URL
+    const params = new URLSearchParams(location.search);
+    const file = params.get("file");
+
+    if (!file) {
+      document.getElementById("content").innerHTML = "<p>No se indicó ningún archivo.</p>";
+    } else {
+      // Si quieres, puedes pasar ?title=...&date=... para mostrar meta
+      const title = params.get("title");
+      const date  = params.get("date");
+      if (title || date) {
+        document.getElementById("meta").innerHTML =
+          (title ? `<h1>${decodeURIComponent(title)}</h1>` : "") +
+          (date ? `<div><em>${decodeURIComponent(date)}</em></div>` : "");
+      }
+
+      fetch(file)
+        .then(r => r.ok ? r.text() : Promise.reject())
+        .then(md => { document.getElementById("content").innerHTML = marked.parse(md); })
+        .catch(() => { document.getElementById("content").innerHTML = "<p>No se pudo cargar el post.</p>"; });
+    }
+  </script>
+</body>
+</html>
