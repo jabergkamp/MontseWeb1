@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: jabergkamp/MontseWeb1   # tu repo exacto en GitHub
   branch: main  # tu rama principal
 
 media_folder: "images/uploads" # dónde se guardan las imágenes
