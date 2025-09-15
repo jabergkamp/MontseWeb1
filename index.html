@@ -23,17 +23,11 @@
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{
-      margin:0; background:var(--bg); color:var(--ink);
-      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      line-height:1.7;
-    }
+    body{margin:0; background:var(--bg); color:var(--ink); font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; line-height:1.7;}
     a{color:var(--brand); text-decoration:none}
 
     /* Header */
-    .nav{position:sticky; top:0; z-index:1000;
-      background:rgba(255,255,255,.9); backdrop-filter:saturate(140%) blur(8px);
-      box-shadow:0 2px 12px rgba(0,0,0,.05);}
+    .nav{position:sticky; top:0; z-index:1000; background:rgba(255,255,255,.9); backdrop-filter:saturate(140%) blur(8px); box-shadow:0 2px 12px rgba(0,0,0,.05);}
     .nav-inner{max-width:var(--max); margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:14px 20px;}
     .brand{font-weight:600}
     .menu{display:flex; gap:18px;}
@@ -57,10 +51,14 @@
     .card{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:18px; min-width:260px;}
     .card h4{color:var(--brand)}
 
-    /* Carrusel solo en mobile */
+    /* Carrusel en mobile */
     @media(max-width:768px){
+      .cards-wrapper{position:relative;}
       .cards{display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; gap:14px; padding-bottom:10px;}
-      .card{flex:0 0 80%; scroll-snap-align:start;}
+      .card{flex:0 0 85%; scroll-snap-align:center;}
+      .arrow{position:absolute; top:40%; transform:translateY(-50%); background:var(--brand); color:#fff; border:none; padding:10px; border-radius:50%; cursor:pointer; box-shadow:var(--shadow);}
+      .arrow.left{left:5px;}
+      .arrow.right{right:5px;}
     }
 
     .faq-item{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:18px; margin-bottom:14px;}
@@ -140,11 +138,15 @@
 
       <div class="block">
         <h3>Modalidades de terapia</h3>
-        <div class="cards">
-          <div class="card"><h4>🌱 Terapia Individual</h4><p>Un espacio personal y seguro para explorar tus emociones, pensamientos y experiencias. Ideal si deseas trabajar en ansiedad, depresión, duelo, crisis de vida o procesos de autoconocimiento. Aquí encontrarás acompañamiento para fortalecer tu bienestar y descubrir nuevas maneras de relacionarte contigo misma y con tu entorno.</p></div>
-          <div class="card"><h4>❤️ Terapia de Pareja</h4><p>Un espacio para que ambos puedan ser escuchados, comprender sus diferencias y reconstruir la forma en que se relacionan. Se enfoca en mejorar la comunicación, recuperar la confianza y encontrar nuevas maneras de estar juntos en medio de los retos de la vida en pareja.</p></div>
-          <div class="card"><h4>🏡 Terapia Familiar</h4><p>Un espacio donde cada voz cuenta y la familia aprende a escucharse y comprenderse mejor. Acompaña a resolver conflictos, fortalecer vínculos y construir dinámicas más saludables que favorezcan la convivencia y el bienestar de todos sus miembros.</p></div>
-          <div class="card"><h4>👩‍👧 Coaching para Padres</h4><p>Acompañamiento para madres y padres de niños pequeños que buscan herramientas prácticas y amorosas para la crianza. Un espacio para comprender mejor las etapas del desarrollo, manejar retos cotidianos y fortalecer el vínculo con sus hijos.</p></div>
+        <div class="cards-wrapper">
+          <button class="arrow left" onclick="scrollCards(-1)">‹</button>
+          <div class="cards" id="cards">
+            <div class="card"><h4>🌱 Terapia Individual</h4><p>Un espacio personal y seguro para explorar tus emociones, pensamientos y experiencias. Ideal si deseas trabajar en ansiedad, depresión, duelo, crisis de vida o procesos de autoconocimiento. Aquí encontrarás acompañamiento para fortalecer tu bienestar y descubrir nuevas maneras de relacionarte contigo misma y con tu entorno.</p></div>
+            <div class="card"><h4>❤️ Terapia de Pareja</h4><p>Un espacio para que ambos puedan ser escuchados, comprender sus diferencias y reconstruir la forma en que se relacionan. Se enfoca en mejorar la comunicación, recuperar la confianza y encontrar nuevas maneras de estar juntos en medio de los retos de la vida en pareja.</p></div>
+            <div class="card"><h4>🏡 Terapia Familiar</h4><p>Un espacio donde cada voz cuenta y la familia aprende a escucharse y comprenderse mejor. Acompaña a resolver conflictos, fortalecer vínculos y construir dinámicas más saludables que favorezcan la convivencia y el bienestar de todos sus miembros.</p></div>
+            <div class="card"><h4>👩‍👧 Coaching para Padres</h4><p>Acompañamiento para madres y padres de niños pequeños que buscan herramientas prácticas y amorosas para la crianza. Un espacio para comprender mejor las etapas del desarrollo, manejar retos cotidianos y fortalecer el vínculo con sus hijos.</p></div>
+          </div>
+          <button class="arrow right" onclick="scrollCards(1)">›</button>
         </div>
       </div>
     </div>
@@ -198,6 +200,12 @@
   <script>
     function toggleMenu(){
       document.getElementById("mobileMenu").classList.toggle("show");
+    }
+
+    function scrollCards(direction){
+      const container = document.getElementById('cards');
+      const cardWidth = container.querySelector('.card').offsetWidth + 16; // ancho + gap
+      container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
     }
   </script>
 </body>
