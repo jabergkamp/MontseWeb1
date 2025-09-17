@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -80,10 +81,12 @@
     if (!file) {
       document.getElementById("content").innerHTML = "<p>No se indicó ningún archivo.</p>";
     } else {
+      const title = params.get("title");
       const date  = params.get("date");
-      if (date) {
+      if (title || date) {
         document.getElementById("meta").innerHTML =
-          `<div><em>${decodeURIComponent(date)}</em></div>`;
+          (title ? `<h1>${decodeURIComponent(title)}</h1>` : "") +
+          (date ? `<div><em>${decodeURIComponent(date)}</em></div>` : "");
       }
 
       fetch(file)
