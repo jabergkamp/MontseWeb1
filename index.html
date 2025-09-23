@@ -84,6 +84,17 @@
       .menu-mobile.show{display:flex;}
       .contact-grid{grid-template-columns:1fr;}
     }
+
+/* Ajuste para que los reels de Instagram no deformen el carrusel */
+.slide blockquote.instagram-media {
+  max-height: 360px;   /* límite de alto */
+  overflow: hidden;    /* corta lo que sobresalga */
+  margin: auto;        /* lo centra */
+}
+
+
+
+    
   </style>
 </head>
 <body>
@@ -173,6 +184,19 @@
     <div class="carousel">
       <div class="track">
 
+          <article class="slide">
+            <div class="thumb" style="padding:8px; text-align:center;">
+              <blockquote 
+                class="instagram-media" 
+                data-instgrm-permalink="https://www.instagram.com/reel/DO6mKptAatZ/"
+                data-instgrm-version="14"
+                style="margin:auto;max-width:280px;min-width:200px;width:100%;border-radius:12px;overflow:hidden;">
+              </blockquote>
+            </div>
+          </article>
+
+
+        
         <!-- Post 3 -->
         <article class="slide">
           <div class="thumb">
@@ -255,5 +279,14 @@
       container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
     }
   </script>
+
+<script async src="https://www.instagram.com/embed.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    if(window.instgrm) window.instgrm.Embeds.process();
+  });
+  </script>
+
+  
 </body>
 </html>
